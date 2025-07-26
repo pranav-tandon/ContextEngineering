@@ -484,13 +484,6 @@ This project builds on established research:
 - [ ] Advanced security
 - [ ] Production deployment tools
 
-## Community
-
-- 💬 **[Discord](https://discord.gg/context-engineering)** - Join our community
-- 🐦 **[Twitter](https://twitter.com/context_eng)** - Follow for updates
-- 📺 **[YouTube](https://youtube.com/@context-engineering)** - Video tutorials
-- 📧 **[Newsletter](https://context-engineering.substack.com)** - Monthly updates
-
 ## License
 
 MIT License - see [LICENSE](LICENSE) for details.
