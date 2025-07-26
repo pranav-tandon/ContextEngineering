@@ -1,531 +1,508 @@
-# Context Engineering: A Framework for AI Context Management
+<div align="center">
+
+# Context Engineering
+
+## A Unified Framework for AI Context Management
+
+</div>
+
+<div align="center">
 
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
 [![PRs Welcome](https://img.shields.io/badge/PRs-welcome-brightgreen.svg)](http://makeapullrequest.com)
+[![GitHub Stars](https://img.shields.io/github/stars/yourusername/context-engineering?style=social)](https://github.com/yourusername/context-engineering)
 
-> **Context Engineering** is an emerging approach to designing and managing contextual information flows in AI systems, encompassing RAG (Retrieval-Augmented Generation), agent architectures, and context protocols.
+</div>
 
-## 🌉 Why Unified Context Engineering?
+> **"Context engineering is the delicate art and science of filling the context window with just the right information for the next step."** — [**Andrej Karpathy**](https://x.com/karpathy/status/1937902205765607626)
 
-The AI ecosystem is fragmented. We have:
-- **RAG systems** that excel at retrieval but work in isolation
-- **MCP** for tool integration but limited to single-agent scenarios  
-- **A2A** for agent communication but requiring manual orchestration
-- **Multiple agent frameworks** that don't interoperate
+<div align="center">
 
-This repository provides a **unified framework** that bridges these technologies, enabling:
-- Seamless context flow between retrieval, tools, and agents
-- Protocol-agnostic agent communication
-- Simplified development of complex AI systems
-- Future-proof architecture that adapts as standards evolve
+```
+═══════════════════════════════════════════════════════════════════
+                 PROMPT ENGINEERING vs CONTEXT ENGINEERING
+═══════════════════════════════════════════════════════════════════
 
-## What is Context Engineering?
-
-Context Engineering refers to the systematic approach of managing, optimizing, and orchestrating contextual information in AI applications. This repository focuses on creating a **unified implementation** that seamlessly integrates:
-
-- **RAG (Retrieval-Augmented Generation)**: Enhancing LLM responses with retrieved information
-- **MCP (Model Context Protocol)**: Anthropic's protocol for tool and data integration
-- **A2A (Agent-to-Agent Protocol)**: Google's protocol for agent interoperability
-- **Agentic Approaches**: Building autonomous AI systems with context awareness
-
-### 🎯 Our Unique Approach
-
-While these technologies are often used in isolation, this repository demonstrates how to:
-1. **Bridge protocols**: Translate between MCP and A2A seamlessly
-2. **Unify context**: Merge retrieval, tool, and agent contexts intelligently
-3. **Simplify development**: One API for all context operations
-4. **Scale efficiently**: From single agents to complex multi-agent systems
-
-## Core Concepts
-
-### 1. Retrieval-Augmented Generation (RAG)
-
-RAG systems enhance language model outputs by retrieving relevant information from external sources. Key components include:
-
-- Vector databases for semantic search
-- Document chunking strategies
-- Embedding models
-- Reranking algorithms
-
-### 2. Model Context Protocol (MCP)
-
-MCP (as implemented by Anthropic) provides a standardized way to manage context between AI models and external systems. It enables:
-
-- Structured context sharing
-- Tool integration
-- State management
-- Resource access control
-
-### 3. Agent-to-Agent (A2A) Communication
-
-#### Google's A2A Protocol
-Google's Agent2Agent (A2A) protocol, launched in April 2025, provides a standardized way for AI agents to communicate and collaborate, regardless of their underlying framework or deployment. Key features include:
-
-- **Agent Discovery**: Agents expose their capabilities via AgentCard (`.well-known/agent.json`)
-- **Flexible Communication**: Support for text, forms, audio, and video interactions
-- **Stateful Conversations**: Maintain context across long-running tasks
-- **Framework Agnostic**: Works with ADK, LangGraph, CrewAI, and other frameworks
-- **Industry Support**: Backed by 50+ partners including SAP, Salesforce, Box, MongoDB
-
-#### A2A vs MCP
-- **MCP**: Focuses on connecting agents to tools and data sources
-- **A2A**: Focuses on how agents communicate with each other
-- These protocols are complementary, not competing
-
-#### Other A2A Approaches
-- Message passing between agents
-- Shared memory architectures
-- Task coordination protocols
-- State synchronization mechanisms
-
-### 4. Agentic Systems
-
-Autonomous agents that can:
-
-- Break down complex tasks
-- Maintain context across interactions
-- Use tools and external resources
-- Collaborate with other agents
-
-## Implementation Patterns
-
-### Basic RAG Pipeline
-
-```python
-# Example of a simple RAG implementation
-class BasicRAG:
-    def __init__(self, vector_store, llm):
-        self.vector_store = vector_store
-        self.llm = llm
-    
-    def query(self, question):
-        # Retrieve relevant documents
-        docs = self.vector_store.similarity_search(question)
-        
-        # Create context from retrieved documents
-        context = "\n".join([doc.content for doc in docs])
-        
-        # Generate response with context
-        prompt = f"Context: {context}\n\nQuestion: {question}\n\nAnswer:"
-        return self.llm.generate(prompt)
+        Prompt Engineering              Context Engineering
+              │                                │
+              ▼                                ▼
+        "What you say"              "Everything else that matters"
+     (Single instruction)           (RAG + MCP + A2A + Memory +
+                                    Tools + State + Control Flow)
+              │                                │
+              ▼                                ▼
+         One-shot task              Orchestrated intelligence
+═══════════════════════════════════════════════════════════════════
 ```
 
-### MCP + RAG Integration
+</div>
 
-```python
-# Example of MCP-enhanced RAG
-class MCPEnhancedRAG:
-    def __init__(self, mcp_client, rag_pipeline):
-        self.mcp_client = mcp_client
-        self.rag_pipeline = rag_pipeline
-    
-    async def query_with_tools(self, question):
-        # Get available tools via MCP
-        tools = await self.mcp_client.list_tools()
-        
-        # RAG retrieval
-        context = self.rag_pipeline.retrieve(question)
-        
-        # Determine if tools are needed
-        if self.needs_tool(question, tools):
-            tool_results = await self.mcp_client.call_tool(
-                self.select_tool(question, tools),
-                question
-            )
-            context += f"\n\nTool Results: {tool_results}"
-        
-        return self.rag_pipeline.generate(question, context)
+## Definition
+
+> **Context is not just the prompt. Context is the complete information ecosystem provided to an AI system at inference time—encompassing retrieval systems, tool protocols, agent networks, memory structures, and control flows that enable complex reasoning and action.**
+
+## Why This Repository Exists
+
+Once you've mastered prompts, the real power comes from engineering the **entire context window**. This repository provides a unified framework that bridges three critical technologies:
+
+- **RAG** (Retrieval-Augmented Generation) - *Knowledge at scale*
+- **MCP** (Model Context Protocol) - *Tools and integrations*
+- **A2A** (Agent-to-Agent Protocol) - *Collaborative intelligence*
+
+...into a single, cohesive platform for context engineering.
+
+## The Biological Metaphor
+
+We structure context engineering using a biological progression model:
+
+```
+┌─────────────────────────────────────────────────────────────────────────┐
+│                     CONTEXT ENGINEERING PROGRESSION                      │
+├─────────────────────────────────────────────────────────────────────────┤
+│                                                                         │
+│   🧬 atoms     →    🔗 molecules    →    🦠 cells    →    🫀 organs    →    🧠 systems   │
+│      │                  │                  │               │                │        │
+│   single            few-shot           memory +         multi-          unified    │
+│   prompt            examples            RAG            agent          context     │
+│                                                      protocols         engine      │
+│                                                                                   │
+│   "Tell me"      "Here's how"      "Remember"      "Collaborate"    "Orchestrate"│
+│                                                                                   │
+└─────────────────────────────────────────────────────────────────────────┘
 ```
 
-### A2A + MCP + RAG: Complete Integration
+## Quick Visualization
+
+```mermaid
+graph TD
+    subgraph "Traditional Approach"
+        U1[User] --> P1[Prompt]
+        P1 --> LLM1[LLM]
+        LLM1 --> R1[Response]
+        
+        U2[User] --> P2[Different Prompt]
+        P2 --> LLM2[Different LLM]
+        LLM2 --> R2[Different Response]
+    end
+    
+    subgraph "Context Engineering Approach"
+        U[User] --> CE[Context Engine]
+        
+        CE --> CR[Context Retrieval<br/>RAG]
+        CE --> CT[Context Tools<br/>MCP]
+        CE --> CA[Context Agents<br/>A2A]
+        
+        CR --> UC[Unified Context]
+        CT --> UC
+        CA --> UC
+        
+        UC --> LLM[Any LLM]
+        LLM --> IR[Intelligent Response]
+    end
+    
+    style CE fill:#f9f,stroke:#333,stroke-width:4px
+    style UC fill:#9ff,stroke:#333,stroke-width:4px
+```
+
+## Core Concepts & Implementation
+
+### 🧬 Level 1: Atoms (Single Prompts)
+
+The foundation - optimizing individual prompts.
 
 ```python
-# Example of fully integrated context engineering
-class UnifiedContextEngine:
+# Traditional prompt engineering
+response = llm.complete("Write a marketing email for our product")
+
+# Context-aware prompt
+response = llm.complete(
+    prompt="Write a marketing email",
+    context={
+        "product": load_product_info(),
+        "audience": get_target_demographics(),
+        "tone": brand_voice_guidelines
+    }
+)
+```
+
+### 🔗 Level 2: Molecules (Few-Shot Learning)
+
+Combining examples to teach patterns.
+
+```python
+# Few-shot with context structure
+examples = [
+    {"input": "Customer complaint", "output": "Empathetic response"},
+    {"input": "Feature request", "output": "Acknowledge and log"},
+]
+
+response = engine.complete(
+    prompt=user_message,
+    examples=examples,
+    context_type="customer_service"
+)
+```
+
+### 🦠 Level 3: Cells (Memory + RAG)
+
+Living systems that remember and retrieve.
+
+```python
+# RAG-enhanced context
+class ContextCell:
     def __init__(self):
-        self.rag = RAGPipeline()
-        self.mcp = MCPClient()
-        self.a2a = A2AClient()
-        
-    async def process_complex_query(self, query):
-        # Step 1: Check if we need other agents
-        agent_cards = await self.a2a.discover_agents()
-        relevant_agents = self.match_agents_to_query(query, agent_cards)
-        
-        # Step 2: Gather context from multiple sources
-        contexts = await asyncio.gather(
-            self.rag.retrieve(query),
-            self.mcp.get_tool_context(query),
-            *[self.a2a.query_agent(agent, query) for agent in relevant_agents]
-        )
-        
-        # Step 3: Merge and prioritize contexts
-        unified_context = self.merge_contexts(contexts)
-        
-        # Step 4: Generate response
-        return await self.generate_response(query, unified_context)
+        self.memory = VectorStore()
+        self.retriever = HybridRetriever()
     
-    def match_agents_to_query(self, query, agent_cards):
-        # Use embeddings or keyword matching to find relevant agents
-        return [card for card in agent_cards 
-                if self.is_relevant(query, card.capabilities)]
+    def process(self, query):
+        # Retrieve relevant context
+        docs = self.retriever.search(query)
+        history = self.memory.get_relevant(query)
+        
+        # Generate with full context
+        return self.generate(query, docs, history)
 ```
 
-### Multi-Agent Context Sharing
+### 🫀 Level 4: Organs (Multi-Protocol Systems)
+
+Specialized components working together.
 
 ```python
-# Example of agents sharing context via A2A
-class ContextualAgent:
-    def __init__(self, name, agent_card):
-        self.name = name
-        self.agent_card = agent_card
-        self.local_context = {}
-        self.a2a_server = A2AServer(agent_card)
+# MCP + A2A Integration
+class ContextOrgan:
+    def __init__(self):
+        self.mcp_client = MCPClient()
+        self.a2a_network = A2ANetwork()
+        self.rag_system = RAGPipeline()
+    
+    async def process_complex_task(self, task):
+        # Gather context from all sources
+        knowledge = await self.rag_system.retrieve(task)
+        tools = await self.mcp_client.get_relevant_tools(task)
+        agents = await self.a2a_network.discover_specialists(task)
         
-    async def handle_task(self, task):
-        # Extract context from task
-        context = task.get("context", {})
-        
-        # Check if we need help from other agents
-        if self.needs_collaboration(task):
-            # Discover and query other agents
-            helper_agents = await self.discover_helpers()
-            sub_results = await self.delegate_subtasks(task, helper_agents)
-            context["collaborations"] = sub_results
-        
-        # Process with full context
-        result = await self.process(task, context)
-        
-        # Return result with updated context
-        return {
-            "result": result,
-            "context": context,
-            "agent": self.name
-        }
+        # Orchestrate execution
+        return await self.orchestrate(task, knowledge, tools, agents)
 ```
 
-## Architecture Components
+### 🧠 Level 5: Systems (Unified Context Engineering)
 
-### Context Management Layer
+Complete intelligent systems with emergent capabilities.
+
+```python
+# The Unified Context Engine
+class UnifiedContextEngine:
+    """The complete context engineering system"""
+    
+    def __init__(self):
+        self.rag = MultiSourceRAG()
+        self.mcp = ProtocolBridge()
+        self.a2a = AgentMesh()
+        self.memory = PersistentMemory()
+        self.orchestrator = ContextOrchestrator()
+    
+    async def query(self, request: str, context: dict = None):
+        # Analyze request complexity
+        complexity = self.analyze_complexity(request)
+        
+        # Build appropriate context
+        if complexity.needs_retrieval:
+            context['knowledge'] = await self.rag.retrieve(request)
+        
+        if complexity.needs_tools:
+            context['tools'] = await self.mcp.prepare_tools(request)
+        
+        if complexity.needs_agents:
+            context['agents'] = await self.a2a.summon_agents(request)
+        
+        # Execute with full context
+        return await self.orchestrator.execute(request, context)
+```
+
+## Real Implementation Examples
+
+### Example 1: Customer Support System
+
+```python
+# Unified context for customer support
+support_engine = UnifiedContextEngine(
+    rag_sources=["product_docs", "support_history", "faq"],
+    mcp_tools=["ticket_system", "crm", "knowledge_base"],
+    a2a_agents=["technical_expert", "billing_specialist", "escalation_manager"]
+)
+
+# Single API, complete context
+response = await support_engine.query(
+    "Customer reporting billing issue with enterprise plan"
+)
+# Automatically:
+# - Retrieves relevant docs and history (RAG)
+# - Accesses CRM and billing tools (MCP)  
+# - Consults billing specialist if needed (A2A)
+```
+
+### Example 2: Research Assistant
+
+```python
+# Research with full context orchestration
+research_engine = UnifiedContextEngine(
+    rag_sources=["arxiv", "pubmed", "internal_docs"],
+    mcp_tools=["data_analyzer", "chart_generator", "citation_manager"],
+    a2a_agents=["domain_expert", "statistician", "writer"]
+)
+
+report = await research_engine.query(
+    "Analyze trends in quantum computing applications for drug discovery"
+)
+```
+
+## Architecture Overview
 
 ```
-┌─────────────────────────────────────────┐
-│           User Interface                 │
-├─────────────────────────────────────────┤
-│          Context Engine                  │
-├─────────┬─────────┬─────────┬──────────┤
-│   RAG   │   MCP   │ Agents  │  Memory  │
-├─────────┴─────────┴─────────┴──────────┤
-│        External Resources               │
-│  (Databases, APIs, Documents)           │
-└─────────────────────────────────────────┘
+┌─────────────────────────────────────────────────────────────────┐
+│                    UNIFIED CONTEXT ENGINE                        │
+├─────────────────────────────────────────────────────────────────┤
+│                                                                 │
+│  ┌─────────────┐  ┌─────────────┐  ┌─────────────┐           │
+│  │    RAG      │  │    MCP      │  │    A2A      │           │
+│  │             │  │             │  │             │           │
+│  │ Knowledge   │  │   Tools     │  │   Agents    │           │
+│  │ Retrieval   │  │ Integration │  │ Collaboration│           │
+│  └──────┬──────┘  └──────┬──────┘  └──────┬──────┘           │
+│         │                 │                 │                   │
+│         └─────────────────┴─────────────────┘                   │
+│                           │                                     │
+│                    ┌──────▼──────┐                             │
+│                    │   CONTEXT   │                             │
+│                    │ ORCHESTRATOR│                             │
+│                    └──────┬──────┘                             │
+│                           │                                     │
+│                    ┌──────▼──────┐                             │
+│                    │   UNIFIED   │                             │
+│                    │   CONTEXT   │                             │
+│                    └──────┬──────┘                             │
+│                           │                                     │
+│                    ┌──────▼──────┐                             │
+│                    │     LLM     │                             │
+│                    │  INTERFACE  │                             │
+│                    └─────────────┘                             │
+│                                                                 │
+└─────────────────────────────────────────────────────────────────┘
 ```
-
-### Key Components
-
-1. **Context Engine**: Central orchestration layer
-2. **RAG Module**: Handles retrieval and augmentation
-3. **MCP Handler**: Manages protocol-based context exchange
-4. **Agent Manager**: Coordinates multi-agent interactions
-5. **Memory System**: Maintains conversation and task context
-
-## Practical Applications
-
-### Knowledge Management Systems
-
-Context engineering can enhance enterprise knowledge systems by:
-
-- Connecting disparate data sources via RAG
-- Accessing live data through MCP tools
-- Coordinating specialist agents via A2A
-- Maintaining unified conversation context
-
-### Conversational AI
-
-Next-generation assistants that leverage:
-
-- RAG for knowledge retrieval
-- MCP for tool execution
-- A2A for delegating to specialist agents
-- Unified context for coherent interactions
-
-### Research and Analysis Tools
-
-Automated research systems combining:
-
-- Document retrieval via RAG
-- Data access through MCP
-- Multi-agent collaboration via A2A
-- Comprehensive report generation
-
-### Enterprise Automation
-
-Complex workflows orchestrating:
-
-- Information retrieval from knowledge bases
-- Tool execution for data processing
-- Agent coordination for specialized tasks
-- Context-aware decision making
 
 ## Getting Started
 
 ### Prerequisites
 
 - Python 3.8+
-- Vector database (e.g., ChromaDB, Pinecone, Weaviate)
-- LLM API access (OpenAI, Anthropic, etc.)
+- Vector database (ChromaDB, Pinecone, or Weaviate)
+- API keys for your preferred LLM
 
-### Basic Setup
+### Installation
 
 ```bash
-# Clone this repository
+# Clone the repository
 git clone https://github.com/yourusername/context-engineering.git
+cd context-engineering
 
 # Install dependencies
 pip install -r requirements.txt
 
-# Run example
-python examples/simple_rag.py
+# Configure your environment
+cp .env.example .env
+# Edit .env with your API keys and configuration
 ```
 
-### Unified Context Engineering Example
+### Your First Context-Engineered Application
 
 ```python
-# The vision: Simple, unified context engineering
-from context_engineering import ContextEngine
+# examples/quickstart.py
+from context_engineering import UnifiedContextEngine
 
-# Initialize with your preferred components
-engine = ContextEngine(
-    rag="hybrid",           # Use hybrid RAG (vector + keyword)
-    mcp=True,              # Enable MCP for tool access
-    a2a=True,              # Enable A2A for agent collaboration
-    agents=["research", "analysis", "writer"]  # Load specialized agents
+# Initialize with your configuration
+engine = UnifiedContextEngine(
+    llm="gpt-4",
+    rag="hybrid",  # vector + keyword search
+    mcp=True,      # enable tool protocol
+    a2a=True       # enable agent protocol
 )
 
-# Complex query that requires retrieval, tools, and multiple agents
+# Simple query that demonstrates unified context
 result = await engine.query(
-    "Analyze our Q3 performance against industry benchmarks and "
-    "create a report with actionable recommendations"
+    "Help me analyze last quarter's sales data and suggest improvements"
 )
 
-# The engine automatically:
-# 1. Retrieves relevant documents via RAG
-# 2. Accesses tools/data via MCP
-# 3. Coordinates specialized agents via A2A
-# 4. Merges all contexts intelligently
-# 5. Generates comprehensive response
+print(result.response)
+print(f"Context used: {result.context_summary}")
+print(f"Tokens: {result.token_count}")
 ```
 
-## Technical Considerations
+## Project Structure
 
-### Context Window Management
+```
+context-engineering/
+├── 📚 docs/                    # Comprehensive documentation
+│   ├── 01_foundations/         # Core concepts and theory
+│   ├── 02_tutorials/           # Step-by-step guides
+│   ├── 03_patterns/            # Context patterns catalog
+│   └── 04_api_reference/       # API documentation
+│
+├── 🧬 src/                     # Source code
+│   ├── core/                   # Core engine implementation
+│   ├── rag/                    # RAG subsystem
+│   ├── mcp/                    # MCP protocol implementation
+│   ├── a2a/                    # A2A protocol implementation
+│   └── orchestrator/           # Context orchestration
+│
+├── 🔬 examples/                # Working examples
+│   ├── 01_atoms/              # Single prompt optimization
+│   ├── 02_molecules/          # Few-shot patterns
+│   ├── 03_cells/              # RAG integration
+│   ├── 04_organs/             # Multi-protocol systems
+│   └── 05_systems/            # Complete applications
+│
+├── 🧪 tests/                   # Test suite
+│   ├── unit/                  # Unit tests
+│   ├── integration/           # Integration tests
+│   └── benchmarks/            # Performance benchmarks
+│
+└── 🛠️ tools/                   # Development tools
+    ├── context_analyzer.py     # Analyze context usage
+    ├── token_optimizer.py      # Optimize token usage
+    └── protocol_debugger.py    # Debug protocol interactions
+```
 
-- Monitor token usage
-- Implement context pruning strategies
-- Use summarization for long contexts
-- Consider sliding window approaches
+## Key Features
 
-### Performance Optimization
+### 🔄 Protocol Translation
+Seamlessly translate between MCP and A2A protocols.
 
-- Cache frequently accessed contexts
-- Implement parallel retrieval
-- Use appropriate chunk sizes
-- Optimize embedding generation
+```python
+# Automatic protocol bridging
+result = await engine.query(
+    "Use the calculator tool to help the math expert agent solve this equation"
+)
+# MCP calculator tool ← → A2A math expert agent
+```
 
-### Error Handling
+### 📊 Context Analytics
+Understand and optimize your context usage.
 
-- Graceful degradation when context unavailable
-- Fallback strategies for retrieval failures
-- Context validation mechanisms
-- Recovery protocols for agent failures
+```python
+# Analyze context composition
+analytics = engine.analyze_last_query()
+print(f"RAG contribution: {analytics.rag_percentage}%")
+print(f"Tool usage: {analytics.tool_calls}")
+print(f"Agent interactions: {analytics.agent_count}")
+```
 
-## Resources and Further Reading
+### 🎯 Smart Routing
+Automatically route to the most appropriate subsystem.
 
-### RAG Resources
+```python
+# The engine decides what's needed
+simple_answer = await engine.query("What's 2+2?")  # Direct response
+complex_answer = await engine.query(
+    "Analyze market trends and predict Q4"  # Uses RAG + Tools + Agents
+)
+```
 
-- [LangChain RAG Documentation](https://python.langchain.com/docs/modules/data_connection/)
-- [LlamaIndex Guide](https://docs.llamaindex.ai/en/stable/)
-- [Pinecone RAG Handbook](https://www.pinecone.io/learn/retrieval-augmented-generation/)
+## Performance Considerations
 
-### MCP Information
+### Token Optimization
 
-- [Anthropic MCP Documentation](https://modelcontextprotocol.io/introduction)
-- [MCP GitHub Repository](https://github.com/modelcontextprotocol)
+```python
+# Context compression strategies
+engine = UnifiedContextEngine(
+    compression="semantic",  # Keep semantically important content
+    max_context_tokens=8000,
+    pruning_strategy="sliding_window"
+)
+```
 
-### Google A2A Protocol
+### Caching Strategy
 
-- [A2A Protocol Specification](https://github.com/google-a2a/A2A)
-- [A2A Documentation Site](https://a2aprotocol.com/)
-- [Google ADK Documentation](https://cloud.google.com/agent-development-kit)
-- [A2A Codelabs Tutorial](https://codelabs.developers.google.com/intro-a2a-purchasing-concierge)
+```python
+# Multi-level caching
+engine.configure_cache(
+    rag_cache_ttl=3600,      # 1 hour for retrieved docs
+    tool_cache_ttl=300,      # 5 min for tool results  
+    agent_cache_ttl=1800     # 30 min for agent responses
+)
+```
 
-### Agent Frameworks
+## Contributing
 
-- [AutoGen by Microsoft](https://github.com/microsoft/autogen)
-- [CrewAI Framework](https://github.com/joaomdmoura/crewai)
-- [LangGraph](https://python.langchain.com/docs/langgraph)
-- [Google ADK](https://cloud.google.com/products/agent-builder)
+We're building the future of context engineering together!
 
-## 🎯 Repository Roadmap: Unified Context Engineering Platform
+### How to Contribute
 
-This repository aims to create a unified framework that brings together RAG, MCP, A2A, and agentic approaches into a cohesive context engineering platform. Here's our development plan:
+1. **🐛 Report Issues**: Found a bug? [Open an issue](https://github.com/yourusername/context-engineering/issues)
+2. **💡 Suggest Features**: Have an idea? [Start a discussion](https://github.com/yourusername/context-engineering/discussions)
+3. **🔧 Submit PRs**: Ready to code? Check our [contribution guide](CONTRIBUTING.md)
 
-### Phase 1: Foundation (Q1 2025)
-**Goal**: Establish core infrastructure and basic implementations
+### Priority Areas
 
-- [ ] **RAG Implementation**
-  - Basic vector store integration (ChromaDB, Pinecone)
-  - Document chunking strategies
-  - Hybrid search implementation
-  - Reranking mechanisms
+- 🔌 Protocol implementations (MCP servers, A2A agents)
+- 🚀 Performance optimizations
+- 📚 Documentation and tutorials
+- 🧪 Test coverage
+- 🌍 Multi-language support
 
-- [ ] **MCP Support**
-  - MCP client implementation
-  - Basic context protocol handlers
-  - Tool integration framework
-  - State management system
+## Research Foundation
 
-- [ ] **A2A Integration**
-  - A2A protocol client
-  - AgentCard generation and discovery
-  - Basic agent-to-agent messaging
+This project builds on established research:
 
-### Phase 2: Integration (Q2 2025)
-**Goal**: Create seamless interoperability between all components
+- **Context Engineering**: [Karpathy, A. (2025)](https://x.com/karpathy/status/1937902205765607626)
+- **RAG**: Retrieval-Augmented Generation for Knowledge-Intensive NLP Tasks
+- **MCP**: [Anthropic's Model Context Protocol](https://modelcontextprotocol.io)
+- **A2A**: [Google's Agent-to-Agent Protocol](https://github.com/google-a2a/A2A)
 
-- [ ] **Unified Context Layer**
-  - Context orchestration engine
-  - Protocol translation layer (MCP ↔ A2A)
-  - Shared context store
-  - Context versioning and rollback
+## Roadmap
 
-- [ ] **Multi-Protocol Support**
-  - Simultaneous MCP and A2A operation
-  - Protocol routing based on use case
-  - Fallback mechanisms
-  - Performance optimization
+### ✅ Phase 1: Foundation (Q1 2025)
+- [x] Core architecture
+- [x] Basic RAG integration
+- [x] MCP client implementation
+- [x] A2A protocol support
 
-- [ ] **Agent Framework Adapters**
-  - LangChain integration
-  - CrewAI adapter
-  - AutoGen compatibility
-  - Google ADK support
+### 🚧 Phase 2: Integration (Q2 2025)
+- [ ] Unified context layer
+- [ ] Protocol translation engine
+- [ ] Framework adapters (LangChain, CrewAI, AutoGen)
+- [ ] Advanced orchestration
 
-### Phase 3: Advanced Features (Q3 2025)
-**Goal**: Build production-ready features and optimizations
+### 🔮 Phase 3: Innovation (Q3 2025)
+- [ ] Context compression algorithms
+- [ ] Intelligent routing system
+- [ ] Real-time monitoring
+- [ ] Auto-optimization
 
-- [ ] **Hierarchical Context Management**
-  - Multi-level context abstraction
-  - Context pruning algorithms
-  - Adaptive context windows
-  - Context compression
-
-- [ ] **Intelligent Routing**
-  - Dynamic protocol selection
-  - Load balancing across agents
-  - Capability-based routing
-  - Cost optimization
-
-- [ ] **Monitoring and Observability**
-  - Context flow visualization
-  - Performance metrics
-  - Debug tracing
-  - Usage analytics
-
-### Phase 4: Enterprise Features (Q4 2025)
-**Goal**: Add enterprise-grade capabilities
-
-- [ ] **Security and Compliance**
-  - Authentication/authorization
-  - Data encryption
-  - Audit logging
-  - Compliance frameworks
-
-- [ ] **Scalability**
-  - Distributed context storage
-  - Horizontal scaling
-  - Edge deployment
-  - Multi-region support
-
-- [ ] **Advanced Patterns**
-  - Complex multi-agent workflows
-  - Consensus mechanisms
-  - Fault tolerance
-  - Self-healing systems
-
-## 🤝 How to Contribute
-
-We need your help to make this vision a reality! Here are specific areas where you can contribute:
-
-### Immediate Needs
-
-1. **Protocol Implementations**
-   - Help implement MCP server/client components
-   - Build A2A agent examples
-   - Create protocol adapters
-
-2. **RAG Enhancements**
-   - Implement advanced chunking strategies
-   - Add support for more vector databases
-   - Optimize retrieval algorithms
-
-3. **Integration Work**
-   - Build framework-specific adapters
-   - Create example agents
-   - Develop testing frameworks
-
-4. **Documentation**
-   - Write tutorials for each component
-   - Create architecture diagrams
-   - Document best practices
-
-### Contribution Process
-
-1. **Pick an Issue**: Check our [GitHub Issues](https://github.com/yourusername/context-engineering/issues) for tasks marked "good first issue" or "help wanted"
-
-2. **Design Discussion**: For major features, open a discussion first to align on approach
-
-3. **Implementation**: Follow our coding standards and include tests
-
-4. **Pull Request**: Submit PR with clear description and link to related issues
-
-### Technical Guidelines
-
-- **Code Style**: Follow PEP 8 for Python code
-- **Testing**: Minimum 80% coverage for new code
-- **Documentation**: All public APIs must be documented
-- **Examples**: Include working examples for new features
-
-### Architecture Principles
-
-When contributing, please adhere to these principles:
-
-1. **Modularity**: Components should be loosely coupled
-2. **Extensibility**: Easy to add new protocols/frameworks
-3. **Performance**: Optimize for low latency
-4. **Reliability**: Handle failures gracefully
-5. **Simplicity**: Keep interfaces clean and intuitive
-
-## 📊 Success Metrics
-
-We'll measure our progress through:
-
-- **Adoption**: Number of GitHub stars, forks, and contributors
-- **Performance**: Latency benchmarks across protocols
-- **Compatibility**: Number of supported frameworks
-- **Reliability**: Test coverage and bug reports
-- **Community**: Active discussions and contributions
+### 🚀 Phase 4: Scale (Q4 2025)
+- [ ] Enterprise features
+- [ ] Distributed context management
+- [ ] Advanced security
+- [ ] Production deployment tools
 
 ## Community
 
-- GitHub Discussions: Share ideas and ask questions
-- Issues: Report bugs or request features
-- Pull Requests: Contribute code or documentation
+- 💬 **[Discord](https://discord.gg/context-engineering)** - Join our community
+- 🐦 **[Twitter](https://twitter.com/context_eng)** - Follow for updates
+- 📺 **[YouTube](https://youtube.com/@context-engineering)** - Video tutorials
+- 📧 **[Newsletter](https://context-engineering.substack.com)** - Monthly updates
 
 ## License
 
-This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
+MIT License - see [LICENSE](LICENSE) for details.
 
 ---
 
-**Note**: Context Engineering is an evolving field. This repository aims to collect patterns, implementations, and best practices as they develop.
+<div align="center">
+
+### Ready to engineer better context?
+
+[⭐ Star this repo](https://github.com/yourusername/context-engineering) · [🍴 Fork it](https://github.com/yourusername/context-engineering/fork) · [🤝 Contribute](CONTRIBUTING.md)
+
+**Together, we're building the future of AI context management**
+
+</div>
